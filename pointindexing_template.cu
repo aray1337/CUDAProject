@@ -8,7 +8,6 @@
 #include <thrust/sort.h>
 #include <thrust/copy.h>
 #include <thrust/device_vector.h>
-// #include <thrust/host_vector.h> // Sanity checks
 #include <thrust/iterator/constant_iterator.h>
 #include <thrust/reduce.h>
 #include <thrust/partition.h>
@@ -135,44 +134,18 @@ int main(int argc, char *argv[])
     //====================================================================================================
     //YOUR WORK below: Step 1- transform point coordinates to cell identifiers; pay attention to functor xytor
     //thrust::transform(...);
-    thrust::device_vector<point2d> points(h_points, h_points + num_points);
-    thrust::device_vector<uint> keys(points.size());
-    thrust::transform(points.begin(), points.end(), keys.begin(), xytor(run_lev));
+    thrust::transform(d_points, d_points + num_points, d_cellids, xytor(run_lev));
     cudaDeviceSynchronize();
     gettimeofday(&s3, NULL);    
     calc_time("transforming..............\n",s2,s3);
-
-    // Sanity Check
-
-    // thrust::host_vector<uint> h_keys = keys;
-
-    /*
-    for (uint i = 0; i < num_points; ++i) {
-        std::cout << h_keys[i] << " ";
-    }
-    std::cout << std::endl;
-    */
     
-
     
     //YOUR WORK below: Step 2- sort (cellid,point) pairs 
     //thrust::stable_sort_by_key(...)
-    thrust::stable_sort_by_key(keys.begin(), keys.end(), points.begin(), thrust::greater<int>()); // Sort in decending order
+    thrust::stable_sort_by_key(d_cellids, d_cellids + num_points, d_points);
     cudaDeviceSynchronize();
     gettimeofday(&s4, NULL);    
     calc_time("sorting..............\n",s3,s4);
-
-    // Sanity Check
-
-    // thrust::host_vector<uint> h_keys = keys;
-
-    
-    /*
-    for (uint i = 0; i < num_points; ++i) {
-        std::cout << h_keys[i] << " ";
-    }
-    std::cout << std::endl;
-    */
     
     
     uint *dptr_PKey=NULL;
@@ -190,7 +163,9 @@ int main(int argc, char *argv[])
     //use  d_cellids as the first input vector and thrust::constant_iterator<int>(1) as the second input
     size_t num_cells=0;//num_cells is initialized to 0 just to make the template compile; it should be updated next
     // num_cells = thrust::reduce_by_key(...).first - d_PKey
-    // num_cells = thrust::reduce_by_key(d_cellids, d_cellids + num_points, thrust::constant_iterator<int>(1), d_PKey, d_PLen);	
+    thrust::pair<thrust::device_ptr<uint>,thrust::device_ptr<uint>> new_end;
+    new_end = thrust::reduce_by_key(d_cellids, d_cellids + num_points, thrust::constant_iterator<int>(1), d_PKey, d_PLen);
+    num_cells = new_end.first - d_PKey;
     cudaDeviceSynchronize();
     gettimeofday(&s5, NULL);
     calc_time("reducing.......\n",s4,s5);
