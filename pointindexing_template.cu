@@ -1,6 +1,9 @@
 //nvcc -O2 pointindexing_template.cu -o pointindexing -I /home/microway/cuda-samples/Common/
 //./pointindexing  100 2 
-//./pointindexing  10000000 10  
+//./pointindexing  10000000 10
+
+// Alan Concepcion
+// Avirup Ray
 
 #include <helper_functions.h>
 #include <helper_cuda.h>
