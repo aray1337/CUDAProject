@@ -8,7 +8,7 @@ import haversine_library
 #code from: https://github.com/rapidsai/cuspatial/blob/724d170a2105441a3533b5eaf9ee82ddcfc49be0/notebooks/nyc_taxi_years_correlation.ipynb
 #data from https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
 
-taxi = cudf.read_parquet("yellow_tripdata_2009-01.parquet")
+taxi = cudf.read_parquet("/data/csc59866_f24/tlcdata/yellow_tripdata_2009-10.parquet")
 x1=taxi['Start_Lon'].to_numpy()
 y1=taxi['Start_Lat'].to_numpy()
 x2=taxi['End_Lon'].to_numpy()
