@@ -9,13 +9,7 @@ __global__ void haversine_distance_kernel(int size, const double *x1,const doubl
  //use any references to compute haversine distance bewtween (x1,y1) and (x2,y2), given in vectors/arrays
  //e.g., https://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula
 
- // const int radius = 6371;
- //double dLat = (x2 - x1) * (3.14/180);
-// double dLong = (y2 - y1) * (3.14/180);
- // double a = sin(dLat/2) * sin(dLat/2) + cos(x1 * (3.14/180)) * cos(x2 * (3.14/180)) * sin(dLong/2) * sin(dLong/2); 
- // double c = 2 * atan2(sqrt(a), sqrt(1-a)); 
- // double d = radius * c; // Distance in km
- // dist = &d;
+
 }
 
 
