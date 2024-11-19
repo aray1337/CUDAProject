@@ -29,6 +29,8 @@ static void HandleError( cudaError_t err,
 void haversine_distance(int size,pybind11::array_t<double> x1_v,pybind11::array_t<double> y1_v,
     pybind11::array_t<double> x2_v,pybind11::array_t<double> y2_v,pybind11::array_t<double> dist_v)
 {
+
+
   assert(x1_v.request().ndim==1);
   assert(x2_v.request().ndim==1);
   assert(y1_v.request().ndim==1);
