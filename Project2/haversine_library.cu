@@ -12,10 +12,10 @@ __global__ void haversine_distance_kernel(int size, const double *x1,const doubl
   if (idx < size) {
     const double R = 6371.0; // Earth's radius in km
     
-    double lat1 = x1[idx] * M_PI / 180.0;
-    double lat2 = x2[idx] * M_PI / 180.0;
-    double lon1 = y1[idx] * M_PI / 180.0;
-    double lon2 = y2[idx] * M_PI / 180.0;
+    double lon1 = x1[idx] * M_PI / 180.0;
+    double lon2 = x2[idx] * M_PI / 180.0;
+    double lat1 = y1[idx] * M_PI / 180.0;
+    double lat2 = y2[idx] * M_PI / 180.0;
     
     double dlat = lat2 - lat1;
     double dlon = lon2 - lon1;

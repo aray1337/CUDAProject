@@ -48,7 +48,7 @@ haversine(size, x1, y1, x2, y2, dist)
 '''
 timing = timeit.timeit(setup="from __main__ import haversine, size, x1, y1, x2, y2, dist", stmt=time, number=5)
 
-print("Average time:", timing / 10, "seconds")
+print("Average time:", timing / 5, "seconds")
 
 
 del taxi
