@@ -25,6 +25,7 @@ static void HandleError( cudaError_t err,
     }
 }
 #define HANDLE_ERROR( err ) (HandleError( err, __FILE__, __LINE__ ))
+#define CALC_TIME( msg ) (calc_time( msg, __T0__, __T1__))
 
 void haversine_distance(int size,pybind11::array_t<double> x1_v,pybind11::array_t<double> y1_v,
     pybind11::array_t<double> x2_v,pybind11::array_t<double> y2_v,pybind11::array_t<double> dist_v)

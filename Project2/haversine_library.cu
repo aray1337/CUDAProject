@@ -10,10 +10,12 @@ __global__ void haversine_distance_kernel(int size, const double *x1,const doubl
  //e.g., https://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula
 
   const int radius = 6371;
-  double dLat = (x2[blockIdx.x * blockDim.x + threadIdx.x] - x1[blockIdx.x * blockDim.x + threadIdx.x]) * (3.14 / 180);
-  double dLong = (y2[blockIdx.x * blockDim.x + threadIdx.x] - y1[blockIdx.x * blockDim.x + threadIdx.x]) * (3.14 / 180);
-  double a = sin(dLat / 2) * sin(dLat / 2) + cos(x1[blockIdx.x * blockDim.x + threadIdx.x] * (3.14 / 180)) * cos(x2[blockIdx.x * blockDim.x + threadIdx.x] * (3.14 / 180)) * sin(dLong / 2) * sin(dLong / 2);
-  double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+  double dLon = ((*x2 - *x1) * (M_PI/180));
+  double dLat = ((*y2 - *y1) * (M_PI/180));
+
+  double a = sin(dLat/2) * sin(dLat/2) + cos(*y1 * (M_PI/180)) * cos(*y2 * (M_PI/180)) * sin(dLon/2) * sin(dLon/2);
+  double c = 2 * atan2(sqrt(a), sqrt(1-a));
+
   *dist = radius * c;
   
 }

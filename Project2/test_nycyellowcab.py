@@ -32,16 +32,15 @@ haversine_library.haversine_distance(size,x1,y1,x2,y2,dist)
 
 
 def haversine(size , x1, y1, x2, y2, dist):
-
+    radius = 6371
     x1, y1, x2, y2 = map(np.radians, [x1, y1, x2, y2])
 
-    dlon = x2 - x1
-    dlat = y2 - y1
+    dLon = x2 - x1
+    dLat = y2 - y1
 
-    a = np.sin(dlat / 2)**2 + np.cos(y1) * np.cos(y2) * np.sin(dlon / 2)**2
-    c = 2 * np.arcsin(np.sqrt(a))
-    r = 6371
-    dist = c * r
+    a = np.sin(dLat / 2)**2 + np.cos(y1) * np.cos(y2) * np.sin(dLon / 2)**2
+    c = 2 * np.arcsin(np.sqrt(a), np.sqrt(1-a))
+    dist = c * radius
     return dist
 
 time = '''
